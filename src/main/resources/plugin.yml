@@ -1,0 +1,4 @@
+name: CastleCrafters
+version: '1.0.0-SNAPSHOT'
+main: dev.ethans.castlecrafters.CastleCrafters
+api-version: '1.21'

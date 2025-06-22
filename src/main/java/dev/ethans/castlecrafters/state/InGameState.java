@@ -20,7 +20,7 @@ public class InGameState extends GameState {
 
     @Override
     public @NotNull Duration getDuration() {
-        return Duration.ofSeconds(plugin.getConfig().getInt("Game.Duration"));
+        return ((CastleCrafters) plugin).getGeneralConfig().getGameDuration();
     }
 
     @Override
@@ -34,7 +34,21 @@ public class InGameState extends GameState {
             teamToJoin.addPlayer(player);
         });
 
-        // TODO Spawn players at their respective team positions
+        redTeam.getPlayers().forEach(player -> {
+            player.sendMessage(Component.text("Teleporting to your team's spawn...", NamedTextColor.RED));
+            player.teleport(((CastleCrafters) plugin).getMapConfig().getMap().spawnLocations().get(redTeam));
+        });
+
+        blueTeam.getPlayers().forEach(player -> {
+            player.sendMessage(Component.text("Teleporting to your team's spawn...", NamedTextColor.BLUE));
+            player.teleport(((CastleCrafters) plugin).getMapConfig().getMap().spawnLocations().get(blueTeam));
+        });
+
+        broadcast(Component.text("Please see your hotbar for colony management items!", NamedTextColor.GREEN));
+
+        plugin.getServer().getLogger().info("The has started! Teams are as follows:");
+        plugin.getServer().getLogger().info("Red Team: " + redTeam.getPlayers().size() + " players");
+        plugin.getServer().getLogger().info("Blue Team: " + blueTeam.getPlayers().size() + " players");
     }
 
     @Override

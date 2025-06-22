@@ -1,0 +1,3 @@
+Game:
+  Duration: 300 # Duration of the game in seconds
+  Map: "map1" # GameMap that is in rotation for the game

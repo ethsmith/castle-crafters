@@ -1,0 +1,11 @@
+World: "arena"
+
+Spawns:
+  RED:
+    X: 100
+    Y: 64
+    Z: 100
+  BLUE:
+    X: 200
+    Y: 64
+    Z: 200

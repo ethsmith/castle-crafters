@@ -34,6 +34,6 @@ public class WaitingState extends GameState {
 
     @Override
     public boolean isReadyToEnd() {
-        return true;
+        return !getPlayers().isEmpty();
     }
 }

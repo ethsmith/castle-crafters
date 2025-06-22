@@ -34,7 +34,7 @@ public enum Team {
         players.add(player);
         player.sendMessage(Component.text("You have joined the ", NamedTextColor.GREEN)
                 .append(displayName)
-                .append(Component.text("team.", NamedTextColor.GREEN)));
+                .append(Component.text(" team.", NamedTextColor.GREEN)));
     }
 
     public void removePlayer(Player player) {
@@ -42,7 +42,7 @@ public enum Team {
         players.remove(player);
         player.sendMessage(Component.text("You have left the ", NamedTextColor.RED)
                 .append(displayName)
-                .append(Component.text("team.", NamedTextColor.RED)));
+                .append(Component.text(" team.", NamedTextColor.RED)));
     }
 
     public boolean hasMorePlayersThan(Team other) {

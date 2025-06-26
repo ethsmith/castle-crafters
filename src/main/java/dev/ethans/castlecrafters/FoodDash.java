@@ -7,9 +7,9 @@ import dev.ethans.castlecrafters.state.WaitingState;
 import dev.ethans.castlecrafters.state.base.ScheduledStateSeries;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class CastleCrafters extends JavaPlugin {
+public final class FoodDash extends JavaPlugin {
 
-    private static CastleCrafters instance;
+    private static FoodDash instance;
     private GeneralConfig generalConfig;
     private MapConfig mapConfig;
 
@@ -35,7 +35,7 @@ public final class CastleCrafters extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public static CastleCrafters getInstance() {
+    public static FoodDash getInstance() {
         return instance;
     }
 

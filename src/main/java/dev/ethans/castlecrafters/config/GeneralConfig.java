@@ -1,28 +1,31 @@
 package dev.ethans.castlecrafters.config;
 
-import dev.ethans.castlecrafters.CastleCrafters;
+import dev.ethans.castlecrafters.FoodDash;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.time.Duration;
 
 public class GeneralConfig implements FileConfig {
 
-    private Duration gameDuration;
+    private Duration waveDuration;
     private String map;
+    private int startingItemAmount;
 
     @Override
-    public CastleCrafters getPlugin() {
-        return CastleCrafters.getInstance();
+    public FoodDash getPlugin() {
+        return FoodDash.getInstance();
     }
 
     @Override
     public void load() {
         getPlugin().saveDefaultConfig();
 
-        // Load game duration from config
-        this.gameDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Game.Duration"));
+        // Load wave duration from config
+        this.waveDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Game.Wave_Duration"));
         // Load map name from config
         this.map = getPlugin().getConfig().getString("Game.Map");
+        // Load starting item amount from config
+        this.startingItemAmount = getPlugin().getConfig().getInt("Waves.Starting_Item_Amount");
     }
 
     @Override
@@ -35,9 +38,11 @@ public class GeneralConfig implements FileConfig {
         getPlugin().reloadConfig();
 
         // Load game duration from config
-        this.gameDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Game.Duration"));
+        this.waveDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Game.Wave_Duration"));
         // Load map name from config
         this.map = getPlugin().getConfig().getString("Game.Map");
+        // Load starting item amount from config
+        this.startingItemAmount = getPlugin().getConfig().getInt("Waves.Starting_Item_Amount");
     }
 
     @Override
@@ -45,8 +50,12 @@ public class GeneralConfig implements FileConfig {
         return (YamlConfiguration) getPlugin().getConfig();
     }
 
-    public Duration getGameDuration() {
-        return gameDuration;
+    public Duration getWaveDuration() {
+        return waveDuration;
+    }
+
+    public int getStartingItemAmount() {
+        return startingItemAmount;
     }
 
     public String getMap() {

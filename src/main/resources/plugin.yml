@@ -1,4 +1,4 @@
-name: CastleCrafters
+name: FoodDash
 version: '1.0.0-SNAPSHOT'
-main: dev.ethans.castlecrafters.CastleCrafters
+main: dev.ethans.castlecrafters.FoodDash
 api-version: '1.21'

@@ -1,10 +1,9 @@
 package dev.ethans.castlecrafters.config;
 
-import dev.ethans.castlecrafters.CastleCrafters;
+import dev.ethans.castlecrafters.FoodDash;
 import dev.ethans.castlecrafters.map.GameMap;
 import dev.ethans.castlecrafters.team.Team;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -18,8 +17,8 @@ public class MapConfig implements FileConfig {
     private YamlConfiguration config;
 
     @Override
-    public CastleCrafters getPlugin() {
-        return CastleCrafters.getInstance();
+    public FoodDash getPlugin() {
+        return FoodDash.getInstance();
     }
 
     @Override

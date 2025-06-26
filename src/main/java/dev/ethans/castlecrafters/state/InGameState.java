@@ -1,8 +1,9 @@
 package dev.ethans.castlecrafters.state;
 
-import dev.ethans.castlecrafters.CastleCrafters;
+import dev.ethans.castlecrafters.FoodDash;
 import dev.ethans.castlecrafters.state.base.GameState;
 import dev.ethans.castlecrafters.team.Team;
+import dev.ethans.castlecrafters.wave.WaveManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
@@ -11,53 +12,52 @@ import java.time.Duration;
 
 public class InGameState extends GameState {
 
-    private Team redTeam = Team.RED;
-    private Team blueTeam = Team.BLUE;
+    private WaveManager waveManager;
 
     public InGameState() {
-        super(CastleCrafters.getInstance());
+        super(FoodDash.getInstance());
     }
 
     @Override
     public @NotNull Duration getDuration() {
-        return ((CastleCrafters) plugin).getGeneralConfig().getGameDuration();
+        return Duration.ZERO;
     }
 
     @Override
     protected void onStart() {
+        // Create Wave Manager
+        waveManager = new WaveManager();
+
         // Start of game announcement
         broadcast(Component.text("The game has begun!", NamedTextColor.GREEN));
 
-        // Split players into teams
-        getPlayers().forEach(player -> {
-            Team teamToJoin = redTeam.hasMorePlayersThan(blueTeam) ? blueTeam: redTeam;
-            teamToJoin.addPlayer(player);
+        // Teleport players
+        Team.DASHERS.getPlayers().forEach(player -> {
+            player.sendMessage(Component.text("Taking you to your farm!", NamedTextColor.RED));
+            player.teleport(((FoodDash) plugin).getMapConfig().getMap().spawnLocations().get(Team.DASHERS));
         });
 
-        redTeam.getPlayers().forEach(player -> {
-            player.sendMessage(Component.text("Teleporting to your team's spawn...", NamedTextColor.RED));
-            player.teleport(((CastleCrafters) plugin).getMapConfig().getMap().spawnLocations().get(redTeam));
-        });
-
-        blueTeam.getPlayers().forEach(player -> {
-            player.sendMessage(Component.text("Teleporting to your team's spawn...", NamedTextColor.BLUE));
-            player.teleport(((CastleCrafters) plugin).getMapConfig().getMap().spawnLocations().get(blueTeam));
-        });
-
-        broadcast(Component.text("Please see your hotbar for colony management items!", NamedTextColor.GREEN));
-
-        plugin.getServer().getLogger().info("The has started! Teams are as follows:");
-        plugin.getServer().getLogger().info("Red Team: " + redTeam.getPlayers().size() + " players");
-        plugin.getServer().getLogger().info("Blue Team: " + blueTeam.getPlayers().size() + " players");
+        // Start timer
+        waveManager.startTimer();
     }
 
     @Override
     public void onUpdate() {
+        if (!waveManager.getCurrentWave().items().isEmpty()) return;
 
+        broadcast(Component.text("You delivered all the food, starting the next wave!", NamedTextColor.GREEN));
+        waveManager.stopTimer();
+        waveManager.nextWave();
+        waveManager.startTimer();
     }
 
     @Override
     protected void onEnd() {
 
+    }
+
+    @Override
+    public boolean isReadyToEnd() {
+        return waveManager.timeIsUp() && !waveManager.getCurrentWave().items().isEmpty();
     }
 }

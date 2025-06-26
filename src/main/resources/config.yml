@@ -1,3 +1,6 @@
 Game:
-  Duration: 300 # Duration of the game in seconds
+  Wave_Duration: 300 # Duration of the game in seconds
   Map: "map1" # GameMap that is in rotation for the game
+
+Waves:
+  Starting_Item_Amount: 5 # Starting amount of items for the first wave

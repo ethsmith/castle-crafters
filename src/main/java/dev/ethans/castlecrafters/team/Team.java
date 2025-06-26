@@ -11,8 +11,8 @@ import java.util.List;
 
 public enum Team {
 
-    RED(Component.text("Red", NamedTextColor.RED, TextDecoration.BOLD)),
-    BLUE(Component.text("Blue", NamedTextColor.BLUE, TextDecoration.BOLD));
+    DASHERS(Component.text("Red", NamedTextColor.RED, TextDecoration.BOLD));
+//    BLUE(Component.text("Blue", NamedTextColor.BLUE, TextDecoration.BOLD));
 
     private final TextComponent displayName;
     private final List<Player> players = new ArrayList<>();

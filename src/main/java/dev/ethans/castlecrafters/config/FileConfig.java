@@ -1,11 +1,11 @@
 package dev.ethans.castlecrafters.config;
 
-import dev.ethans.castlecrafters.CastleCrafters;
+import dev.ethans.castlecrafters.FoodDash;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public interface FileConfig {
 
-    CastleCrafters getPlugin();
+    FoodDash getPlugin();
 
     void load();
 

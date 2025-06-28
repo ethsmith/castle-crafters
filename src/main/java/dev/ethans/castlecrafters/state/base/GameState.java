@@ -40,7 +40,7 @@ public abstract class GameState extends State implements Listener {
         tasks.clear();
     }
 
-    protected final Collection<? extends Player> getPlayers() {
+    public final Collection<? extends Player> getPlayers() {
         return Bukkit.getOnlinePlayers();
     }
 

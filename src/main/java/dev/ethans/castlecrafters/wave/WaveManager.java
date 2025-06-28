@@ -19,6 +19,7 @@ public class WaveManager {
     private final List<Material> potentialItems = new ArrayList<>();
     private final int startingItemAmount = plugin.getGeneralConfig().getStartingItemAmount();
     private final GameState gameState;
+    private final WaveTimer waveTimer;
 
     private Wave currentWave;
     private long timeLeft;
@@ -26,6 +27,7 @@ public class WaveManager {
 
     public WaveManager(GameState gameState) {
         this.gameState = gameState;
+        this.waveTimer = new WaveTimer(this);
 
         for (Material value : Material.values()) {
             if (value.asBlockType() == null) return;
@@ -76,6 +78,7 @@ public class WaveManager {
             @Override
             public void run() {
                 timeLeft--;
+                waveTimer.update();
                 if (timeLeft <= 0)
                     cancel();
             }
@@ -89,5 +92,17 @@ public class WaveManager {
 
     public boolean timeIsUp() {
         return timeLeft <= 0;
+    }
+
+    public long getTimeLeft() {
+        return timeLeft;
+    }
+
+    public WaveTimer getWaveTimer() {
+        return waveTimer;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }

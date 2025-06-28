@@ -10,12 +10,11 @@ public record Wave(int waveNumber, Map<Material, Integer> items) {
         return items.getOrDefault(material, 0);
     }
 
-    public void decrementAmountLeft(Material material) {
-        int amount = getAmountLeft(material);
-        amount--;
+    public void subtractAmount(Material material, int amountToDecrement) {
+        int amount = getAmountLeft(material) - amountToDecrement;
 
         if (amount > 0) {
-            items.put(material, amount - 1);
+            items.put(material, amount);
             return;
         }
 

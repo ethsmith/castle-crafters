@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class FoodDash extends JavaPlugin {
 
     private static FoodDash instance;
+
     private GeneralConfig generalConfig;
     private MapConfig mapConfig;
 
@@ -24,10 +25,10 @@ public final class FoodDash extends JavaPlugin {
         mapConfig = new MapConfig();
         mapConfig.load();
 
-        ScheduledStateSeries gameStateSeries = new ScheduledStateSeries(this);
-        gameStateSeries.add(new WaitingState());
-        gameStateSeries.add(new InGameState());
-        gameStateSeries.start();
+        ScheduledStateSeries stateMachine = new ScheduledStateSeries(this);
+        stateMachine.add(new WaitingState());
+        stateMachine.add(new InGameState());
+        stateMachine.start();
     }
 
     @Override

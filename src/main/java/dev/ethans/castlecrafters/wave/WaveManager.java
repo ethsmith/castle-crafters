@@ -1,6 +1,7 @@
 package dev.ethans.castlecrafters.wave;
 
 import dev.ethans.castlecrafters.FoodDash;
+import dev.ethans.castlecrafters.state.base.GameState;
 import org.bukkit.Material;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -14,15 +15,18 @@ import java.util.Map;
 public class WaveManager {
 
     private static final FoodDash plugin = FoodDash.getInstance();
-    private static final List<Material> potentialItems = new ArrayList<>();
 
+    private final List<Material> potentialItems = new ArrayList<>();
     private final int startingItemAmount = plugin.getGeneralConfig().getStartingItemAmount();
+    private final GameState gameState;
 
     private Wave currentWave;
     private long timeLeft;
     private BukkitTask timer;
 
-    public WaveManager() {
+    public WaveManager(GameState gameState) {
+        this.gameState = gameState;
+
         for (Material value : Material.values()) {
             if (value.asBlockType() == null) return;
             if (value.asBlockType().getBlockDataClass() != Ageable.class) return;
@@ -33,7 +37,7 @@ public class WaveManager {
             throw new IllegalStateException("Unable to find any potential items for Wave generation.");
         }
 
-        currentWave = new Wave(1, new HashMap<>());
+        setCurrentWave(new Wave(1, new HashMap<>()));
         generateWaveItems();
     }
 
@@ -46,7 +50,7 @@ public class WaveManager {
     }
 
     public void nextWave() {
-        currentWave = new Wave(currentWave.waveNumber() + 1, new HashMap<>());
+        setCurrentWave(new Wave(currentWave.waveNumber() + 1, new HashMap<>()));
         generateWaveItems();
     }
 

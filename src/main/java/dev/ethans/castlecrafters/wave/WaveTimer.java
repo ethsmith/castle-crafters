@@ -28,7 +28,8 @@ public class WaveTimer {
     }
 
     public void update() {
-        timerBar.progress((float) waveManager.getTimeLeft() / startingTime);
+        float progress = Math.min(1.0f, (float) waveManager.getTimeLeft() / startingTime);
+        timerBar.progress(progress);
         timerBar.name(Component.text("Round " + waveManager.getCurrentWave().waveNumber() + ": "
                 + getFormattedTime(waveManager.getTimeLeft()), NamedTextColor.BLUE));
     }

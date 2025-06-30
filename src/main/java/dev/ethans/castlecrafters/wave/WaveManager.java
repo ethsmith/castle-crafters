@@ -28,20 +28,21 @@ public class WaveManager {
 
     public WaveManager(GameState gameState) {
         this.gameState = gameState;
+
+        setCurrentWave(new Wave(1, new HashMap<>()));
+
         this.waveTimer = new WaveTimer(this);
         this.scoreboard = new WaveScoreboard(this);
 
         for (Material value : Material.values()) {
-            if (value.asBlockType() == null) return;
-            if (value.asBlockType().getBlockDataClass() != Ageable.class) return;
+            if (value.asBlockType() == null) continue;
+            if (value.asBlockType().getBlockDataClass() != Ageable.class) continue;
             potentialItems.add(value);
         }
 
-        if (potentialItems.isEmpty()) {
+        if (potentialItems.isEmpty())
             throw new IllegalStateException("Unable to find any potential items for Wave generation.");
-        }
 
-        setCurrentWave(new Wave(1, new HashMap<>()));
         generateWaveItems();
     }
 
@@ -73,10 +74,10 @@ public class WaveManager {
     }
 
     public void startTimer() {
-        if (!timer.isCancelled()) return;
+        if (timer != null && !timer.isCancelled()) return;
 
         timeLeft = plugin.getGeneralConfig().getWaveDuration().toSeconds();
-        timer = plugin.getServer().getScheduler().runTaskTimer(plugin, new BukkitRunnable() {
+        timer = new BukkitRunnable() {
             @Override
             public void run() {
                 timeLeft--;
@@ -84,7 +85,7 @@ public class WaveManager {
                 if (timeLeft <= 0)
                     cancel();
             }
-        }, 20L, 20L);
+        }.runTaskTimer(plugin, 20L, 20L);
     }
 
     public void stopTimer() {

@@ -48,13 +48,13 @@ public class WaveScoreboard {
         SidebarComponent lines = linesBuilder.build();
         this.scoreboardLayout = new ComponentSidebarLayout(title, lines);
 
-        plugin.getServer().getScheduler().runTaskTimer(plugin, new BukkitRunnable() {
+        new BukkitRunnable() {
             @Override
             public void run() {
                 if (!enabled) cancel();
                 scoreboardLayout.apply(scoreboard);
             }
-        }, 0, 1);
+        }.runTaskTimer(plugin, 0, 1);
     }
 
     public Sidebar getScoreboard() {

@@ -55,7 +55,6 @@ public class InGameState extends GameState {
     @Override
     protected void onEnd() {
         waveManager.getWaveTimer().removeAllPlayers();
-        waveManager.getWaveScoreboard().setEnabled(false);
     }
 
     @Override

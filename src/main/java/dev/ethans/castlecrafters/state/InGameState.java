@@ -17,7 +17,6 @@ public class InGameState extends GameState {
 
     public InGameState() {
         super(FoodDash.getInstance());
-        this.waveManager = new WaveManager(this);
     }
 
     @Override
@@ -27,6 +26,7 @@ public class InGameState extends GameState {
 
     @Override
     protected void onStart() {
+        this.waveManager = new WaveManager(this);
         register(new DepositListener(waveManager));
 
         // Start of game announcement

@@ -41,7 +41,7 @@ public abstract class GameState extends State implements Listener {
     }
 
     public final Collection<? extends Player> getPlayers() {
-        return Bukkit.getOnlinePlayers();
+        return plugin.getServer().getOnlinePlayers();
     }
 
     protected final void broadcast(TextComponent message) {

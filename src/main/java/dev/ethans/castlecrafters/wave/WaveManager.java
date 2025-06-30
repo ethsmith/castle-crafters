@@ -20,6 +20,7 @@ public class WaveManager {
     private final int startingItemAmount = plugin.getGeneralConfig().getStartingItemAmount();
     private final GameState gameState;
     private final WaveTimer waveTimer;
+    private final WaveScoreboard scoreboard;
 
     private Wave currentWave;
     private long timeLeft;
@@ -28,6 +29,7 @@ public class WaveManager {
     public WaveManager(GameState gameState) {
         this.gameState = gameState;
         this.waveTimer = new WaveTimer(this);
+        this.scoreboard = new WaveScoreboard(this);
 
         for (Material value : Material.values()) {
             if (value.asBlockType() == null) return;
@@ -100,6 +102,10 @@ public class WaveManager {
 
     public WaveTimer getWaveTimer() {
         return waveTimer;
+    }
+
+    public WaveScoreboard getWaveScoreboard() {
+        return scoreboard;
     }
 
     public GameState getGameState() {

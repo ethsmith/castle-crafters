@@ -16,6 +16,7 @@ public enum Team {
 
     private final TextComponent displayName;
     private final List<Player> players = new ArrayList<>();
+    private double coins = 0;
 
     Team(TextComponent displayName) {
         this.displayName = displayName;
@@ -43,6 +44,18 @@ public enum Team {
         player.sendMessage(Component.text("You have left the ", NamedTextColor.RED)
                 .append(displayName)
                 .append(Component.text(" team.", NamedTextColor.RED)));
+    }
+
+    public double getCoins() {
+        return coins;
+    }
+
+    public void addCoins(double amount) {
+        coins += amount;
+    }
+
+    public void removeCoins(double amount) {
+        coins -= amount;
     }
 
     public boolean hasMorePlayersThan(Team other) {

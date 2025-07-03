@@ -2,7 +2,11 @@
 ### Objective
 The objective of the game is to work with the other players to try to deliver
 all the required food before the time runs out. The amount of food is 
-increased with each wave.
+increased with each wave. Delivering food provides you coins for the shop.
+
+### The Shop
+The shop allows you to use coins to increase grow speed of plants, increase the
+durability of your hoe, increase the plow range of your hoe, and more.
 
 ### Building a Map For the Game
 The game checks for items inserted into barrels. So you must make an area with

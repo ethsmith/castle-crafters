@@ -1,6 +1,7 @@
 package dev.ethans.castlecrafters.wave;
 
 import dev.ethans.castlecrafters.FoodDash;
+import dev.ethans.castlecrafters.team.Team;
 import fr.mrmicky.fastboard.FastBoard;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,6 +33,7 @@ public class WaveScoreboard {
             List<String> lines = new ArrayList<>();
             lines.add("");
             lines.add(ChatColor.GREEN + "Wave: " + waveManager.getCurrentWave().waveNumber());
+            lines.add(ChatColor.GREEN + "Coins: " + Team.DASHERS.getCoins());
             lines.add("");
 
             for (ItemType type : waveManager.getCurrentWave().items().keySet())

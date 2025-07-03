@@ -1,6 +1,7 @@
 package dev.ethans.castlecrafters.event;
 
 import dev.ethans.castlecrafters.state.InGameState;
+import dev.ethans.castlecrafters.team.Team;
 import dev.ethans.castlecrafters.wave.WaveManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -65,6 +66,7 @@ public class DepositListener implements Listener {
                 .append(Component.text(" ", NamedTextColor.RED))
                 .append(Component.text("items.", NamedTextColor.RED)));
 
+        Team.DASHERS.addCoins(finalDepositAmount);
         waveManager.getWaveScoreboard().update();
     }
 }

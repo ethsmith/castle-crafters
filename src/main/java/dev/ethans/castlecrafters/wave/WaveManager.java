@@ -9,6 +9,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class WaveManager {
 
@@ -61,10 +62,12 @@ public class WaveManager {
         // Slowly increase the amount of items for each wave
         int amount = startingItemAmount + (waveNumber - 1) * 2;
 
-        // Randomly select items from the potentialItems list
-        for (int i = 0; i < amount; i++) {
+        int totalAmount = 0;
+        while (totalAmount < amount) {
             ItemType type = potentialItems.get((int) (Math.random() * potentialItems.size()));
-            items.put(type, items.getOrDefault(type, 0) + 1);
+            int amountToAdd = new Random().nextInt(1, amount - totalAmount);
+            totalAmount += amountToAdd;
+            items.put(type, items.getOrDefault(type, 0) + amountToAdd);
         }
     }
 

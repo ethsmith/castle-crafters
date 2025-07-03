@@ -1,23 +1,24 @@
 package dev.ethans.castlecrafters.wave;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemType;
 
 import java.util.Map;
 
-public record Wave(int waveNumber, Map<Material, Integer> items) {
+public record Wave(int waveNumber, Map<ItemType, Integer> items) {
 
-    public int getAmountLeft(Material material) {
-        return items.getOrDefault(material, 0);
+    public int getAmountLeft(ItemType type) {
+        return items.getOrDefault(type, 0);
     }
 
-    public void subtractAmount(Material material, int amountToDecrement) {
-        int amount = getAmountLeft(material) - amountToDecrement;
+    public void subtractAmount(ItemType type, int amountToDecrement) {
+        int amount = getAmountLeft(type) - amountToDecrement;
 
         if (amount > 0) {
-            items.put(material, amount);
+            items.put(type, amount);
             return;
         }
 
-        items.remove(material);
+        items.remove(type);
     }
 }

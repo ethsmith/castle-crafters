@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.PlayerInventory;
 
 public class DepositListener implements Listener {
@@ -32,7 +33,7 @@ public class DepositListener implements Listener {
 
         Player player = (Player) event.getSource().getHolder();
         ItemStack depositItem = event.getItem();
-        Material depositItemType = depositItem.getType();
+        ItemType depositItemType = depositItem.getType().asItemType();
 
         int originalDepositAmount = depositItem.getAmount();
         int neededAmount = waveManager.getCurrentWave().getAmountLeft(depositItemType);

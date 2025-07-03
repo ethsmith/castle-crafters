@@ -2,12 +2,10 @@ package dev.ethans.castlecrafters.wave;
 
 import dev.ethans.castlecrafters.FoodDash;
 import dev.ethans.castlecrafters.state.base.GameState;
-import org.bukkit.Material;
-import org.bukkit.block.data.Ageable;
+import org.bukkit.inventory.ItemType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +13,14 @@ import java.util.Map;
 public class WaveManager {
 
     private static final FoodDash plugin = FoodDash.getInstance();
+    private static final List<ItemType> potentialItems = List.of(
+            ItemType.WHEAT,
+            ItemType.CARROT,
+            ItemType.POTATO,
+            ItemType.MELON_SLICE,
+            ItemType.PUMPKIN
+    );
 
-    private final List<Material> potentialItems = new ArrayList<>();
     private final int startingItemAmount = plugin.getGeneralConfig().getStartingItemAmount();
     private final GameState gameState;
     private final WaveTimer waveTimer;
@@ -33,15 +37,6 @@ public class WaveManager {
 
         this.waveTimer = new WaveTimer(this);
         this.scoreboard = new WaveScoreboard(this);
-
-        for (Material value : Material.values()) {
-            if (value.asBlockType() == null) continue;
-            if (value.asBlockType().getBlockDataClass() != Ageable.class) continue;
-            potentialItems.add(value);
-        }
-
-        if (potentialItems.isEmpty())
-            throw new IllegalStateException("Unable to find any potential items for Wave generation.");
 
         generateWaveItems();
     }
@@ -61,15 +56,15 @@ public class WaveManager {
 
     public void generateWaveItems() {
         int waveNumber = currentWave.waveNumber();
-        Map<Material, Integer> items = currentWave.items();
+        Map<ItemType, Integer> items = currentWave.items();
 
         // Slowly increase the amount of items for each wave
         int amount = startingItemAmount + (waveNumber - 1) * 2;
 
         // Randomly select items from the potentialItems list
         for (int i = 0; i < amount; i++) {
-            Material material = potentialItems.get((int) (Math.random() * potentialItems.size()));
-            items.put(material, items.getOrDefault(material, 0) + 1);
+            ItemType type = potentialItems.get((int) (Math.random() * potentialItems.size()));
+            items.put(type, items.getOrDefault(type, 0) + 1);
         }
     }
 

@@ -33,13 +33,11 @@ public class WaveManager {
 
     public WaveManager(GameState gameState) {
         this.gameState = gameState;
-
         setCurrentWave(new Wave(1, new HashMap<>()));
-
         this.waveTimer = new WaveTimer(this);
-        this.scoreboard = new WaveScoreboard(this);
 
         generateWaveItems();
+        this.scoreboard = new WaveScoreboard(this);
     }
 
     public Wave getCurrentWave() {
@@ -66,7 +64,8 @@ public class WaveManager {
         int totalAmount = 0;
         while (totalAmount < amount) {
             ItemType type = potentialItems.get((int) (Math.random() * potentialItems.size()));
-            int amountToAdd = new Random().nextInt(1, amount - totalAmount);
+            int bound = amount - totalAmount;
+            int amountToAdd = bound <= 1 ? 1 : new Random().nextInt(1, amount - totalAmount);
             totalAmount += amountToAdd;
             items.put(type, items.getOrDefault(type, 0) + amountToAdd);
         }

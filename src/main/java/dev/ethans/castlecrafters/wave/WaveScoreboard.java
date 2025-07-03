@@ -24,6 +24,7 @@ public class WaveScoreboard {
             board.updateTitle(ChatColor.BLUE +"Food Dash");
             boards.put(player, board);
         });
+        update();
     }
 
     public void update() {
@@ -33,10 +34,11 @@ public class WaveScoreboard {
             lines.add(ChatColor.GREEN + "Wave: " + waveManager.getCurrentWave().waveNumber());
             lines.add("");
 
-            for (ItemType type : waveManager.getCurrentWave().items().keySet()) {
+            for (ItemType type : waveManager.getCurrentWave().items().keySet())
                 lines.add(ChatColor.AQUA + type.asMaterial().name().replace("_", " ")
                         + ": " + waveManager.getCurrentWave().items().get(type));
-            }
+
+            board.updateLines(lines);
         });
     }
 }

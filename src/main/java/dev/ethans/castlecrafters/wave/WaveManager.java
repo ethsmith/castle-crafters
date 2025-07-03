@@ -53,6 +53,7 @@ public class WaveManager {
     public void nextWave() {
         setCurrentWave(new Wave(currentWave.waveNumber() + 1, new HashMap<>()));
         generateWaveItems();
+        scoreboard.update();
     }
 
     public void generateWaveItems() {

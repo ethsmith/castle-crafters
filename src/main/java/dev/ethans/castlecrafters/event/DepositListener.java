@@ -64,5 +64,7 @@ public class DepositListener implements Listener {
                 .append(Component.text(amountToRefund, NamedTextColor.RED))
                 .append(Component.text(" ", NamedTextColor.RED))
                 .append(Component.text("items.", NamedTextColor.RED)));
+
+        waveManager.getWaveScoreboard().update();
     }
 }

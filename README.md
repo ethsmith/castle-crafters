@@ -16,3 +16,6 @@ to grow the food. Maybe in the future.
 I am making this minigame as a fun warmup into minigame development to prepare
 for my work at Hypixel after a (small) break from Minecraft development. If you have
 ideas, please fork this repo, and make a pull request.
+
+### Screenshots
+![img.png](img.png)

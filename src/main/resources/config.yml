@@ -4,3 +4,6 @@ Game:
 
 Waves:
   Starting_Item_Amount: 5 # Starting amount of items for the first wave
+
+Crops:
+  Grow_Duration: 15

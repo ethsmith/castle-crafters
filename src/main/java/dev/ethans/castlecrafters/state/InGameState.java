@@ -1,6 +1,8 @@
 package dev.ethans.castlecrafters.state;
 
 import dev.ethans.castlecrafters.FoodDash;
+import dev.ethans.castlecrafters.crops.CropManager;
+import dev.ethans.castlecrafters.event.CropPlaceListener;
 import dev.ethans.castlecrafters.event.DepositListener;
 import dev.ethans.castlecrafters.event.PlayerQuitListener;
 import dev.ethans.castlecrafters.state.base.GameState;
@@ -15,6 +17,7 @@ import java.time.Duration;
 public class InGameState extends GameState {
 
     private WaveManager waveManager;
+    private CropManager cropManager;
 
     public InGameState() {
         super(FoodDash.getInstance());
@@ -28,8 +31,11 @@ public class InGameState extends GameState {
     @Override
     protected void onStart() {
         this.waveManager = new WaveManager(this);
+        this.cropManager = new CropManager();
+
         register(new DepositListener(waveManager));
         register(new PlayerQuitListener());
+        register(new CropPlaceListener(cropManager));
 
         // Start of game announcement
         broadcast(Component.text("The game has begun!", NamedTextColor.GREEN));

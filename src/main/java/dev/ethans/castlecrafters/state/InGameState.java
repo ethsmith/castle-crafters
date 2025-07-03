@@ -2,6 +2,7 @@ package dev.ethans.castlecrafters.state;
 
 import dev.ethans.castlecrafters.FoodDash;
 import dev.ethans.castlecrafters.event.DepositListener;
+import dev.ethans.castlecrafters.event.PlayerQuitListener;
 import dev.ethans.castlecrafters.state.base.GameState;
 import dev.ethans.castlecrafters.team.Team;
 import dev.ethans.castlecrafters.wave.WaveManager;
@@ -28,6 +29,7 @@ public class InGameState extends GameState {
     protected void onStart() {
         this.waveManager = new WaveManager(this);
         register(new DepositListener(waveManager));
+        register(new PlayerQuitListener());
 
         // Start of game announcement
         broadcast(Component.text("The game has begun!", NamedTextColor.GREEN));

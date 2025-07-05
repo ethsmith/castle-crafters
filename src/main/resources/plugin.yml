@@ -1,4 +1,4 @@
 name: FoodDash
 version: '1.0.0-SNAPSHOT'
-main: dev.ethans.castlecrafters.FoodDash
+main: dev.ethans.fooddash.FoodDash
 api-version: '1.21'

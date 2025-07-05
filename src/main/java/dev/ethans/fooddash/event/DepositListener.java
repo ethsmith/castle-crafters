@@ -57,7 +57,7 @@ public class DepositListener implements Listener {
             barrelInventory.close();
             barrelInventory.clear();
 
-            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_TRADE, 1, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_YES, 1, 1);
 
             int finalDepositAmount = Math.min(originalDepositAmount, neededAmount);
             waveManager.getCurrentWave().subtractAmount(depositItemType, finalDepositAmount);

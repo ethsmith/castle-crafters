@@ -58,7 +58,7 @@ public class InGameState extends GameState {
         getPlayers().forEach(player ->
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1));
         broadcastTitle(Component.text("Food Delivered!", NamedTextColor.GREEN),
-                Component.text("Good job!Starting the next wave!", NamedTextColor.AQUA));
+                Component.text("Good job! Starting the next wave!", NamedTextColor.AQUA));
         waveManager.stopTimer();
         waveManager.nextWave();
         waveManager.startTimer();

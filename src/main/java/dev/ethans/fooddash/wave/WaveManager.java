@@ -17,9 +17,7 @@ public class WaveManager {
     private static final List<ItemType> potentialItems = List.of(
             ItemType.WHEAT,
             ItemType.CARROT,
-            ItemType.POTATO,
-            ItemType.MELON_SLICE,
-            ItemType.PUMPKIN
+            ItemType.POTATO
     );
 
     private final int startingItemAmount = plugin.getGeneralConfig().getStartingItemAmount();

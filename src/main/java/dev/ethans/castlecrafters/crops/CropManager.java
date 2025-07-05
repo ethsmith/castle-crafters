@@ -3,10 +3,6 @@ package dev.ethans.castlecrafters.crops;
 import dev.ethans.castlecrafters.FoodDash;
 import dev.ethans.castlecrafters.shop.ShopUpgrade;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.Ageable;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +10,9 @@ import java.util.Map;
 public class CropManager {
 
     public static final FoodDash foodDash = FoodDash.getInstance();
+    private static final Map<Location, CropTask> cropTasks = new HashMap<>();
 
     private static long growDuration;
-    private static Map<Location, BukkitTask> growTasks = new HashMap<>();
 
     public CropManager() {
         updateGrowDuration();
@@ -31,39 +27,16 @@ public class CropManager {
         return growDuration;
     }
 
-    public void addGrowTask(Location location) {
-
-        if (growTasks.containsKey(location)) {
-            growTasks.get(location).cancel();
-            growTasks.remove(location);
+    public void addTask(Location location, CropTask task) {
+        if (cropTasks.containsKey(location)) {
+            cropTasks.get(location).cancel();
+            cropTasks.remove(location);
         }
+        cropTasks.put(location, task);
+        task.run(location);
+    }
 
-        BukkitTask task = new BukkitRunnable() {
-            @Override
-            public void run() {
-                Block block = location.getBlock();
-
-                if (block.getType().isAir()) {
-                    cancel();
-                    growTasks.remove(location);
-                    return;
-                }
-
-                if (!(block.getBlockData() instanceof Ageable ageable)) {
-                    cancel();
-                    growTasks.remove(location);
-                    return;
-                }
-
-                ageable.setAge(ageable.getAge() + 1);
-                block.setBlockData(ageable);
-
-                if (ageable.getAge() == ageable.getMaximumAge()) {
-                    cancel();
-                    growTasks.remove(location);
-                }
-            }
-        }.runTaskTimer(foodDash, growDuration, growDuration);
-        growTasks.put(location, task);
+    public Map<Location, CropTask> getCropTasks() {
+        return cropTasks;
     }
 }

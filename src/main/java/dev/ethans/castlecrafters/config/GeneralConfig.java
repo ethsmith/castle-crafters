@@ -9,6 +9,7 @@ public class GeneralConfig implements FileConfig {
 
     private Duration waveDuration;
     private Duration growDuration;
+    private Duration decayDuration;
     private String map;
     private int startingItemAmount;
 
@@ -24,6 +25,7 @@ public class GeneralConfig implements FileConfig {
         // Load wave duration from config
         this.waveDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Game.Wave_Duration"));
         this.growDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Crops.Grow_Duration"));
+        this.decayDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Crops.Decay_Duration"));
         // Load map name from config
         this.map = getPlugin().getConfig().getString("Game.Map");
         // Load starting item amount from config
@@ -42,6 +44,7 @@ public class GeneralConfig implements FileConfig {
         // Load game duration from config
         this.waveDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Game.Wave_Duration"));
         this.growDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Crops.Grow_Duration"));
+        this.decayDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Crops.Decay_Duration"));
         // Load map name from config
         this.map = getPlugin().getConfig().getString("Game.Map");
         // Load starting item amount from config
@@ -59,6 +62,10 @@ public class GeneralConfig implements FileConfig {
 
     public Duration getGrowDuration() {
         return growDuration;
+    }
+
+    public Duration getDecayDuration() {
+        return decayDuration;
     }
 
     public int getStartingItemAmount() {

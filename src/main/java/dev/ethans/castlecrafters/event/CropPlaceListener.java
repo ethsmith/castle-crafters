@@ -2,6 +2,7 @@ package dev.ethans.castlecrafters.event;
 
 import dev.ethans.castlecrafters.FoodDash;
 import dev.ethans.castlecrafters.crops.CropManager;
+import dev.ethans.castlecrafters.crops.GrowTask;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,6 @@ public class CropPlaceListener implements Listener {
     public void onCropPlace(BlockPlaceEvent event) {
         Block block = event.getBlockPlaced();
         if (!(block.getBlockData() instanceof Ageable)) return;
-        cropManager.addGrowTask(block.getLocation());
+        cropManager.addTask(block.getLocation(), new GrowTask(cropManager));
     }
 }

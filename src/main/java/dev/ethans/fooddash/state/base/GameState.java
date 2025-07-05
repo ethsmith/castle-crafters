@@ -1,6 +1,7 @@
 package dev.ethans.fooddash.state.base;
 
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.title.Title;
 import net.minikloon.fsmgasm.State;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -45,6 +46,10 @@ public abstract class GameState extends State implements Listener {
 
     protected final void broadcast(TextComponent message) {
         getPlayers().forEach(p -> p.sendMessage(message));
+    }
+
+    protected final void broadcastTitle(TextComponent title, TextComponent subtitle) {
+        getPlayers().forEach(p -> p.showTitle(Title.title(title, subtitle)));
     }
 
     protected void register(Listener listener) {

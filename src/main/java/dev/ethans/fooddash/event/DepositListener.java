@@ -6,6 +6,7 @@ import dev.ethans.fooddash.wave.WaveManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -55,6 +56,8 @@ public class DepositListener implements Listener {
         plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
             barrelInventory.close();
             barrelInventory.clear();
+
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_TRADE, 1, 1);
 
             int finalDepositAmount = Math.min(originalDepositAmount, neededAmount);
             waveManager.getCurrentWave().subtractAmount(depositItemType, finalDepositAmount);

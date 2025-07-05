@@ -10,6 +10,7 @@ import dev.ethans.fooddash.team.Team;
 import dev.ethans.fooddash.wave.WaveManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Sound;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -54,7 +55,10 @@ public class InGameState extends GameState {
     public void onUpdate() {
         if (!waveManager.getCurrentWave().items().isEmpty()) return;
 
-        broadcast(Component.text("You delivered all the food, starting the next wave!", NamedTextColor.GREEN));
+        getPlayers().forEach(player ->
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1));
+        broadcastTitle(Component.text("Food Delivered!", NamedTextColor.GREEN),
+                Component.text("Good job!Starting the next wave!", NamedTextColor.AQUA));
         waveManager.stopTimer();
         waveManager.nextWave();
         waveManager.startTimer();

@@ -24,19 +24,6 @@ public class DecayTask implements CropTask {
 
     @Override
     public void run(Location location) {
-        Location center = location.clone().add(0.5, 2.0, 0.5); // Centered above block
-        Color gray = Color.fromRGB(128, 128, 128);
-        Particle.DustOptions dustOptions = new Particle.DustOptions(gray, 1.0F);
-
-        AtomicInteger tick = new AtomicInteger(0);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                center.getWorld().spawnParticle(Particle.DUST, center, 20, 0.2, 0, 0.2, 0, dustOptions);
-                if (tick.getAndIncrement() > 100) cancel();
-            }
-        }.runTaskTimer(plugin, 0, 1);
-
         task = new BukkitRunnable() {
             @Override
             public void run() {

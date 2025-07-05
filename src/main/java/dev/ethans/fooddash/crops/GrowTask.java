@@ -37,14 +37,15 @@ public class GrowTask implements CropTask {
                     return;
                 }
 
-                ageable.setAge(ageable.getAge() + 1);
-                block.setBlockData(ageable);
-
                 if (ageable.getAge() == ageable.getMaximumAge()) {
                     cancel();
                     cropManager.getCropTasks().remove(location);
                     cropManager.addTask(location.subtract(0, 1, 0), new DecayTask(cropManager));
+                    return;
                 }
+
+                ageable.setAge(ageable.getAge() + 1);
+                block.setBlockData(ageable);
             }
         }.runTaskTimer(plugin, CropManager.getGrowDuration(), CropManager.getGrowDuration());
     }

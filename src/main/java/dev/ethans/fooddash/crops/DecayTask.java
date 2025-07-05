@@ -32,6 +32,8 @@ public class DecayTask implements CropTask {
                     return;
                 }
 
+                Block crop = location.clone().add(0, 1, 0).getBlock();
+                crop.setType(Material.AIR);
                 block.setType(Material.DIRT);
             }
         }.runTaskLater(plugin, plugin.getGeneralConfig().getDecayDuration().toSeconds());

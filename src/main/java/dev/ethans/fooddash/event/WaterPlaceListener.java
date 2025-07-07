@@ -1,6 +1,8 @@
 package dev.ethans.fooddash.event;
 
 import dev.ethans.fooddash.FoodDash;
+import dev.ethans.fooddash.crops.Crop;
+import dev.ethans.fooddash.crops.CropManager;
 import dev.ethans.fooddash.wave.WaveManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,9 +18,11 @@ public class WaterPlaceListener implements Listener {
 
     private static final FoodDash plugin = FoodDash.getInstance();
     private final WaveManager waveManager;
+    private final CropManager cropManager;
 
-    public WaterPlaceListener(WaveManager waveManager) {
+    public WaterPlaceListener(WaveManager waveManager, CropManager cropManager) {
         this.waveManager = waveManager;
+        this.cropManager = cropManager;
     }
 
     @EventHandler
@@ -39,7 +43,13 @@ public class WaterPlaceListener implements Listener {
         if (isOnCrop)
             location = location.subtract(0, 1, 0);
 
-        for (Player p : Bukkit.getOnlinePlayers())
-            p.sendBlockChange(location, Material.FARMLAND.createBlockData());
+        final Location loc = location;
+        Crop crop = cropManager.getCrops().stream()
+            .filter(c -> c.getSoil().getLocation().equals(loc))
+            .findFirst().orElse(null);
+
+        if (crop == null) return;
+
+        crop.setWatered(true);
     }
 }

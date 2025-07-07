@@ -4,13 +4,16 @@ import dev.ethans.fooddash.FoodDash;
 import dev.ethans.fooddash.shop.ShopUpgrade;
 import org.bukkit.Location;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CropManager {
 
     public static final FoodDash foodDash = FoodDash.getInstance();
-    private static final Map<Crop, CropTask> cropTasks = new HashMap<>();
+    private final List<Crop> crops = new ArrayList<>();
+    private final Map<Crop, CropTask> cropTasks = new HashMap<>();
 
     private static long growDuration;
 
@@ -38,5 +41,9 @@ public class CropManager {
 
     public Map<Crop, CropTask> getCropTasks() {
         return cropTasks;
+    }
+
+    public List<Crop> getCrops() {
+        return crops;
     }
 }

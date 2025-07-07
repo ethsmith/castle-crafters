@@ -38,7 +38,7 @@ public class InGameState extends GameState {
         register(new DepositListener(waveManager));
         register(new PlayerQuitListener());
         register(new CropPlaceListener(cropManager));
-        register(new WaterPlaceListener(waveManager));
+        register(new WaterPlaceListener(waveManager, cropManager));
 
         // Start of game announcement
         broadcast(Component.text("The game has begun!", NamedTextColor.GREEN));

@@ -1,6 +1,7 @@
 package dev.ethans.fooddash.crops;
 
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
 
 public class Crop {
 
@@ -32,12 +33,26 @@ public class Crop {
 
     public void setWatered(boolean watered) {
         this.watered = watered;
-        if (watered) {
-            needWaterTask = new NeedWaterTask();
-            cropManager.addTask(this, needWaterTask);
-        } else {
+
+        if (!watered) {
             DecayTask decayTask = new DecayTask(cropManager);
             cropManager.addTask(this, decayTask);
+            return;
         }
+
+        grow();
+        needWaterTask = new NeedWaterTask();
+        cropManager.addTask(this, needWaterTask);
+    }
+
+    public void grow() {
+        Block crop = this.crop.getLocation().getBlock();
+
+        if (crop.getType().isAir()) return;
+        if (!(crop.getBlockData() instanceof Ageable ageable)) return;
+        if (ageable.getAge() >= ageable.getMaximumAge()) return;
+
+        ageable.setAge(ageable.getAge() + 1);
+        crop.setBlockData(ageable);
     }
 }

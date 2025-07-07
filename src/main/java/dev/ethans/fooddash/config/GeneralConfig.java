@@ -10,6 +10,7 @@ public class GeneralConfig implements FileConfig {
     private Duration waveDuration;
     private Duration growDuration;
     private Duration decayDuration;
+    private Duration outOfWaterDuration;
     private String map;
     private int startingItemAmount;
 
@@ -21,15 +22,7 @@ public class GeneralConfig implements FileConfig {
     @Override
     public void load() {
         getPlugin().saveDefaultConfig();
-
-        // Load wave duration from config
-        this.waveDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Game.Wave_Duration"));
-        this.growDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Crops.Grow_Duration"));
-        this.decayDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Crops.Decay_Duration"));
-        // Load map name from config
-        this.map = getPlugin().getConfig().getString("Game.Map");
-        // Load starting item amount from config
-        this.startingItemAmount = getPlugin().getConfig().getInt("Waves.Starting_Item_Amount");
+        setValues();
     }
 
     @Override
@@ -40,11 +33,15 @@ public class GeneralConfig implements FileConfig {
     @Override
     public void reload() {
         getPlugin().reloadConfig();
+        setValues();
+    }
 
-        // Load game duration from config
+    private void setValues() {
+        // Load wave duration from config
         this.waveDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Game.Wave_Duration"));
         this.growDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Crops.Grow_Duration"));
         this.decayDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Crops.Decay_Duration"));
+        this.outOfWaterDuration = Duration.ofSeconds(getPlugin().getConfig().getLong("Crops.Out_Of_Water_Duration"));
         // Load map name from config
         this.map = getPlugin().getConfig().getString("Game.Map");
         // Load starting item amount from config
@@ -66,6 +63,10 @@ public class GeneralConfig implements FileConfig {
 
     public Duration getDecayDuration() {
         return decayDuration;
+    }
+
+    public Duration getOutOfWaterDuration() {
+        return outOfWaterDuration;
     }
 
     public int getStartingItemAmount() {

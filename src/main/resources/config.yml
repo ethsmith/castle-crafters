@@ -7,4 +7,5 @@ Waves:
 
 Crops:
   Grow_Duration: 15
-  Decay_Duration: 15
+  Decay_Duration: 5
+  Out_Of_Water_Duration: 5

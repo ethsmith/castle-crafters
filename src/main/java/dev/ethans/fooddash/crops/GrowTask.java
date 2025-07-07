@@ -19,28 +19,29 @@ public class GrowTask implements CropTask {
     }
 
     @Override
-    public void run(Location location) {
+    public void run(Crop crop) {
         task = new BukkitRunnable() {
             @Override
             public void run() {
-                Block block = location.getBlock();
+                Location location = crop.getCrop().getLocation();
+                Block block = crop.getCrop();
 
                 if (block.getType().isAir()) {
                     cancel();
-                    cropManager.getCropTasks().remove(location);
+                    cropManager.getCropTasks().remove(crop);
                     return;
                 }
 
                 if (!(block.getBlockData() instanceof Ageable ageable)) {
                     cancel();
-                    cropManager.getCropTasks().remove(location);
+                    cropManager.getCropTasks().remove(crop);
                     return;
                 }
 
                 if (ageable.getAge() == ageable.getMaximumAge()) {
                     cancel();
-                    cropManager.getCropTasks().remove(location);
-                    cropManager.addTask(location.subtract(0, 1, 0), new DecayTask(cropManager));
+                    cropManager.getCropTasks().remove(crop);
+                    cropManager.addTask(crop, new DecayTask(cropManager));
                     return;
                 }
 

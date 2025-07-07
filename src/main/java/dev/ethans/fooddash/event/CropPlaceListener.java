@@ -1,6 +1,7 @@
 package dev.ethans.fooddash.event;
 
 import dev.ethans.fooddash.FoodDash;
+import dev.ethans.fooddash.crops.Crop;
 import dev.ethans.fooddash.crops.CropManager;
 import dev.ethans.fooddash.crops.GrowTask;
 import org.bukkit.block.Block;
@@ -25,6 +26,7 @@ public class CropPlaceListener implements Listener {
     public void onCropPlace(BlockPlaceEvent event) {
         Block block = event.getBlockPlaced();
         if (!(block.getBlockData() instanceof Ageable)) return;
-        cropManager.addTask(block.getLocation(), new GrowTask(cropManager));
+        Crop crop = new Crop(block, block.getLocation().subtract(0, 1, 0).getBlock());
+        cropManager.addTask(crop, new GrowTask(cropManager));
     }
 }

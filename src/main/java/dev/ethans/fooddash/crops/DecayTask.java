@@ -19,21 +19,21 @@ public class DecayTask implements CropTask {
     }
 
     @Override
-    public void run(Location location) {
+    public void run(Crop crop) {
         task = new BukkitRunnable() {
             @Override
             public void run() {
-                Block block = location.getBlock();
+                Location location = crop.getCrop().getLocation();
+                Block block = crop.getSoil();
 
                 if (block.getType() != Material.FARMLAND) {
-                    plugin.getLogger().info(block.getType().name());
                     cancel();
                     cropManager.getCropTasks().remove(location);
                     return;
                 }
 
-                Block crop = location.clone().add(0, 1, 0).getBlock();
-                crop.setType(Material.AIR);
+                Block plant = crop.getCrop();
+                plant.setType(Material.AIR);
                 block.setType(Material.DIRT);
             }
         }.runTaskLater(plugin, plugin.getGeneralConfig().getDecayDuration().toSeconds() * 20);

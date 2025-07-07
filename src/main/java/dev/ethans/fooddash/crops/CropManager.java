@@ -10,7 +10,7 @@ import java.util.Map;
 public class CropManager {
 
     public static final FoodDash foodDash = FoodDash.getInstance();
-    private static final Map<Location, CropTask> cropTasks = new HashMap<>();
+    private static final Map<Crop, CropTask> cropTasks = new HashMap<>();
 
     private static long growDuration;
 
@@ -27,16 +27,16 @@ public class CropManager {
         return growDuration;
     }
 
-    public void addTask(Location location, CropTask task) {
-        if (cropTasks.containsKey(location)) {
-            cropTasks.get(location).cancel();
-            cropTasks.remove(location);
+    public void addTask(Crop crop, CropTask task) {
+        if (cropTasks.containsKey(crop)) {
+            cropTasks.get(crop).cancel();
+            cropTasks.remove(crop);
         }
-        cropTasks.put(location, task);
-        task.run(location);
+        cropTasks.put(crop, task);
+        task.run(crop);
     }
 
-    public Map<Location, CropTask> getCropTasks() {
+    public Map<Crop, CropTask> getCropTasks() {
         return cropTasks;
     }
 }

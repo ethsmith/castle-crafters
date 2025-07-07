@@ -5,6 +5,7 @@ import dev.ethans.fooddash.crops.CropManager;
 import dev.ethans.fooddash.event.CropPlaceListener;
 import dev.ethans.fooddash.event.DepositListener;
 import dev.ethans.fooddash.event.PlayerQuitListener;
+import dev.ethans.fooddash.event.WaterPlaceListener;
 import dev.ethans.fooddash.state.base.GameState;
 import dev.ethans.fooddash.team.Team;
 import dev.ethans.fooddash.wave.WaveManager;
@@ -37,6 +38,7 @@ public class InGameState extends GameState {
         register(new DepositListener(waveManager));
         register(new PlayerQuitListener());
         register(new CropPlaceListener(cropManager));
+        register(new WaterPlaceListener(waveManager));
 
         // Start of game announcement
         broadcast(Component.text("The game has begun!", NamedTextColor.GREEN));

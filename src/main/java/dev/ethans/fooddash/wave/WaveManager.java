@@ -108,4 +108,8 @@ public class WaveManager {
     public GameState getGameState() {
         return gameState;
     }
+
+    public List<ItemType> getPotentialItems() {
+        return potentialItems;
+    }
 }

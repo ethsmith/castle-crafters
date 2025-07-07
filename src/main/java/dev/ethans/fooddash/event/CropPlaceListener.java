@@ -26,7 +26,7 @@ public class CropPlaceListener implements Listener {
     public void onCropPlace(BlockPlaceEvent event) {
         Block block = event.getBlockPlaced();
         if (!(block.getBlockData() instanceof Ageable)) return;
-        Crop crop = new Crop(block, block.getLocation().subtract(0, 1, 0).getBlock());
+        Crop crop = new Crop(cropManager, block, block.getLocation().subtract(0, 1, 0).getBlock());
         cropManager.addTask(crop, new GrowTask(cropManager));
     }
 }

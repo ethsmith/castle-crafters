@@ -1,10 +1,10 @@
 package dev.ethans.fooddash.crops;
 
 import org.bukkit.block.Block;
-import org.bukkit.scheduler.BukkitTask;
 
 public class Crop {
 
+    private CropManager cropManager;
     private final Block crop;
     private final Block soil;
 
@@ -12,7 +12,8 @@ public class Crop {
 
     private CropTask needWaterTask;
 
-    public Crop(Block crop, Block soil) {
+    public Crop(CropManager cropManager, Block crop, Block soil) {
+        this.cropManager = cropManager;
         this.crop = crop;
         this.soil = soil;
     }
@@ -31,8 +32,12 @@ public class Crop {
 
     public void setWatered(boolean watered) {
         this.watered = watered;
-        if (needWaterTask == null) return;
-        needWaterTask.cancel();
-        needWaterTask = new NeedWaterTask();
+        if (watered) {
+            needWaterTask = new NeedWaterTask();
+            cropManager.addTask(this, needWaterTask);
+        } else {
+            DecayTask decayTask = new DecayTask(cropManager);
+            cropManager.addTask(this, decayTask);
+        }
     }
 }

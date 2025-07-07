@@ -14,7 +14,7 @@ public class NeedWaterTask implements CropTask {
         task = new BukkitRunnable() {
             @Override
             public void run() {
-
+                crop.setWatered(false);
             }
         }.runTaskLater(plugin, plugin.getGeneralConfig().getOutOfWaterDuration().toSeconds() * 20);
     }

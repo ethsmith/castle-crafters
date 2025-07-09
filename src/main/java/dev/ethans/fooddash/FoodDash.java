@@ -1,5 +1,7 @@
 package dev.ethans.fooddash;
 
+import com.maximde.hologramlib.HologramLib;
+import com.maximde.hologramlib.hologram.HologramManager;
 import dev.ethans.fooddash.config.GeneralConfig;
 import dev.ethans.fooddash.config.MapConfig;
 import dev.ethans.fooddash.state.InGameState;
@@ -13,11 +15,19 @@ public final class FoodDash extends JavaPlugin {
 
     private GeneralConfig generalConfig;
     private MapConfig mapConfig;
+    private HologramManager manager;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         instance = this;
+
+        if (HologramLib.getManager().isEmpty()) {
+            getLogger().severe("HologramLib is unavailable, disabling plugin.");
+            getServer().getPluginManager().disablePlugin(this);
+        }
+
+        manager = HologramLib.getManager().get();
 
         generalConfig = new GeneralConfig();
         generalConfig.load();
@@ -46,5 +56,9 @@ public final class FoodDash extends JavaPlugin {
 
     public MapConfig getMapConfig() {
         return mapConfig;
+    }
+
+    public HologramManager getHologramManager() {
+        return manager;
     }
 }

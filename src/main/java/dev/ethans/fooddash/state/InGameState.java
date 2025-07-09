@@ -69,6 +69,10 @@ public class InGameState extends GameState {
     @Override
     protected void onEnd() {
         waveManager.getWaveTimer().removeAllPlayers();
+        cropManager.getCrops().forEach(crop -> {
+            crop.getHologram().removeAllViewers();
+            crop.getHoloUpdater().cancel();
+        });
     }
 
     @Override

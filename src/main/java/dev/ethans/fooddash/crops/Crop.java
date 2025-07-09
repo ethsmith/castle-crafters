@@ -1,11 +1,17 @@
 package dev.ethans.fooddash.crops;
 
+import com.maximde.hologramlib.hologram.TextHologram;
+import dev.ethans.fooddash.FoodDash;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.inventory.ItemType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Crop {
 
@@ -15,11 +21,17 @@ public class Crop {
             ItemType.POTATO
     );
 
+    public static final FoodDash plugin = FoodDash.getInstance();
+
     private final CropManager cropManager;
     private final Block crop;
     private final Block soil;
 
     private boolean watered = false;
+
+    private final AtomicInteger timeSpent = new AtomicInteger(0);
+    private final TextHologram hologram;
+    private final BukkitTask holoUpdater;
 
     public Crop(CropManager cropManager, Block crop, Block soil) {
         this.cropManager = cropManager;
@@ -27,6 +39,31 @@ public class Crop {
         this.soil = soil;
 
         cropManager.getCrops().add(this);
+
+        hologram = new TextHologram(toString())
+                .setMiniMessageText("<aqua>" + plugin.getGeneralConfig().getOutOfWaterDuration().toSeconds() + "s")
+                .setSeeThroughBlocks(false)
+                .setShadow(true)
+                .setScale(1.0f, 1.0f, 1.0f)
+                .setTextOpacity((byte) 200)
+                .setBackgroundColor(Color.fromARGB(60, 255, 236, 222).asARGB())
+                .setMaxLineWidth(200);
+        plugin.getHologramManager().spawn(hologram, crop.getLocation().add(0, 1, 0));
+
+        holoUpdater = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!isValid()) {
+                    hologram.removeAllViewers();
+                    cancel();
+                    return;
+                }
+
+                int spent = timeSpent.incrementAndGet();
+                hologram.setText("<aqua>" + (plugin.getGeneralConfig().getOutOfWaterDuration().toSeconds() - spent) + "s");
+            }
+        }.runTaskTimer(plugin, 0, 20);
+
         setWatered(true);
     }
 
@@ -51,6 +88,8 @@ public class Crop {
             return;
         }
 
+        timeSpent.set(0);
+        hologram.setText("<aqua>" + plugin.getGeneralConfig().getOutOfWaterDuration().toSeconds() + "s");
         grow();
         cropManager.addTask(this, new NeedWaterTask(cropManager));
     }
@@ -63,6 +102,14 @@ public class Crop {
 
         ageable.setAge(ageable.getAge() + 1);
         crop.setBlockData(ageable);
+    }
+
+    public TextHologram getHologram() {
+        return hologram;
+    }
+
+    public BukkitTask getHoloUpdater() {
+        return holoUpdater;
     }
 
     public boolean isValid() {

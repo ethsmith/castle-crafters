@@ -15,20 +15,13 @@ public class CropManager {
     private final List<Crop> crops = new ArrayList<>();
     private final Map<Crop, CropTask> cropTasks = new HashMap<>();
 
-    private static long growDuration;
-
-    public CropManager() {
-        updateGrowDuration();
-    }
-
-    public static void updateGrowDuration() {
-        growDuration = (plugin.getGeneralConfig().getGrowDuration().getSeconds()
-                * 20) - ShopUpgrade.GROW_SPEED.getLevel() * 20L;
-    }
-
-    public static long getGrowDuration() {
-        return growDuration;
-    }
+    // Leaving this here for now, but it's not used
+    // because growing only happens after you water
+    // the crops, and not automatically on a timer anymore.
+//    public static long getGrowDuration() {
+//        return (plugin.getGeneralConfig().getGrowDuration().getSeconds()
+//                * 20) - ShopUpgrade.GROW_SPEED.getLevel() * 20L;
+//    }
 
     public void addTask(Crop crop, CropTask task) {
         if (!crop.isValid()) {

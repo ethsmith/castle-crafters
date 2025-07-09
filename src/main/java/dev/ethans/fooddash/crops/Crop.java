@@ -25,7 +25,9 @@ public class Crop {
         this.cropManager = cropManager;
         this.crop = crop;
         this.soil = soil;
+
         cropManager.getCrops().add(this);
+        setWatered(true);
     }
 
     public Block getCrop() {

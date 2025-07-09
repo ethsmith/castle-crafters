@@ -41,10 +41,10 @@ public class WaterPlaceListener implements Listener {
 
         if (crop == null) return;
         if (!crop.isValid()) return;
+        if (crop.isWatered()) return;
 
         event.setCancelled(true);
         player.getWorld().playSound(block.getLocation(), Sound.ITEM_BUCKET_EMPTY, 1, 1);
         bucket.setType(Material.BUCKET);
-        crop.setWatered(true);
     }
 }

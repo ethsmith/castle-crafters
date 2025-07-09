@@ -46,5 +46,6 @@ public class WaterPlaceListener implements Listener {
         event.setCancelled(true);
         player.getWorld().playSound(block.getLocation(), Sound.ITEM_BUCKET_EMPTY, 1, 1);
         bucket.setType(Material.BUCKET);
+        crop.setWatered(true);
     }
 }

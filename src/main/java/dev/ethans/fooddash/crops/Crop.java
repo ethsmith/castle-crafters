@@ -61,6 +61,7 @@ public class Crop {
 
                 int spent = timeSpent.incrementAndGet();
                 hologram.setText("<aqua>" + (plugin.getGeneralConfig().getOutOfWaterDuration().toSeconds() - spent) + "s");
+                hologram.update();
             }
         }.runTaskTimer(plugin, 0, 20);
 
@@ -90,6 +91,7 @@ public class Crop {
 
         timeSpent.set(0);
         hologram.setText("<aqua>" + plugin.getGeneralConfig().getOutOfWaterDuration().toSeconds() + "s");
+        hologram.update();
         grow();
         cropManager.addTask(this, new NeedWaterTask(cropManager));
     }

@@ -2,7 +2,6 @@ package dev.ethans.fooddash.crops;
 
 import dev.ethans.fooddash.FoodDash;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 

@@ -42,7 +42,7 @@ public class MapConfig implements FileConfig {
                         entry -> new Location(getPlugin().getServer().createWorld(new WorldCreator(mapName)), config.getDouble("Spawns." + entry.getKey() + ".X"),
                                 config.getDouble("Spawns." + entry.getKey() + ".Y"),
                                 config.getDouble("Spawns." + entry.getKey() + ".Z")
-                )));
+                        )));
         this.map = new GameMap(mapName, spawnLocations);
     }
 

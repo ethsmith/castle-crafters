@@ -4,7 +4,6 @@ import dev.ethans.fooddash.FoodDash;
 import dev.ethans.fooddash.crops.Crop;
 import dev.ethans.fooddash.crops.CropManager;
 import dev.ethans.fooddash.wave.WaveManager;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -45,8 +44,8 @@ public class WaterPlaceListener implements Listener {
 
         final Location loc = location;
         Crop crop = cropManager.getCrops().stream()
-            .filter(c -> c.getSoil().getLocation().equals(loc))
-            .findFirst().orElse(null);
+                .filter(c -> c.getSoil().getLocation().equals(loc))
+                .findFirst().orElse(null);
 
         if (crop == null) return;
 

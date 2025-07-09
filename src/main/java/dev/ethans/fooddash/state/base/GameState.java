@@ -32,7 +32,7 @@ public abstract class GameState extends State implements Listener {
     @Override
     public final void end() {
         super.end();
-        if(! super.getEnded())
+        if (!super.getEnded())
             return;
         listeners.forEach(HandlerList::unregisterAll);
         tasks.forEach(BukkitTask::cancel);

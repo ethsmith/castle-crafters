@@ -22,7 +22,7 @@ public class WaveScoreboard {
         this.waveManager = waveManager;
         waveManager.getGameState().getPlayers().forEach(player -> {
             FastBoard board = new FastBoard(player);
-            board.updateTitle(ChatColor.BLUE +"Food Dash");
+            board.updateTitle(ChatColor.BLUE + "Food Dash");
             boards.put(player, board);
         });
         update();

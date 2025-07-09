@@ -2,6 +2,7 @@ package dev.ethans.fooddash.crops;
 
 import dev.ethans.fooddash.FoodDash;
 import dev.ethans.fooddash.shop.ShopUpgrade;
+import org.bukkit.Location;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,5 +53,13 @@ public class CropManager {
 
     public List<Crop> getCrops() {
         return crops;
+    }
+
+    public Crop getCrop(Location location) {
+        for (Crop crop : getCrops()) {
+            if (!crop.getCrop().getLocation().equals(location) && !crop.getSoil().getLocation().equals(location)) continue;
+            return crop;
+        }
+        return null;
     }
 }

@@ -6,12 +6,14 @@ import dev.ethans.fooddash.crops.CropManager;
 import dev.ethans.fooddash.wave.WaveManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class WaterPlaceListener implements Listener {
 
@@ -28,27 +30,21 @@ public class WaterPlaceListener implements Listener {
     public void onWaterPlace(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         Player player = event.getPlayer();
-        if (player.getEquipment().getItemInMainHand().getType() != Material.WATER_BUCKET) return;
+        ItemStack bucket = player.getInventory().getItemInMainHand();
+        if (bucket.getType() != Material.WATER_BUCKET) return;
         Block block = event.getClickedBlock();
 
         if (block == null) return;
 
-        boolean isOnCrop = Crop.validCrops.contains(block.getType().asItemType());
-        if (!isOnCrop && block.getType() != Material.FARMLAND) return;
-
-        event.setCancelled(true);
-
         Location location = block.getLocation();
-        if (isOnCrop)
-            location = location.subtract(0, 1, 0);
-
-        final Location loc = location;
-        Crop crop = cropManager.getCrops().stream()
-                .filter(c -> c.getSoil().getLocation().equals(loc))
-                .findFirst().orElse(null);
+        Crop crop = cropManager.getCrop(location);
 
         if (crop == null) return;
+        if (!crop.isValid()) return;
 
+        event.setCancelled(true);
+        player.getWorld().playSound(block.getLocation(), Sound.ITEM_BUCKET_EMPTY, 1, 1);
+        bucket.setType(Material.BUCKET);
         crop.setWatered(true);
     }
 }

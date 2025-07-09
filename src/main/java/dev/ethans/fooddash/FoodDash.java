@@ -22,6 +22,8 @@ public final class FoodDash extends JavaPlugin {
         // Plugin startup logic
         instance = this;
 
+        HologramLib.onLoad(this);
+
         if (HologramLib.getManager().isEmpty()) {
             getLogger().severe("HologramLib is unavailable, disabling plugin.");
             getServer().getPluginManager().disablePlugin(this);

@@ -1,7 +1,6 @@
 package dev.ethans.fooddash.crops;
 
 import dev.ethans.fooddash.FoodDash;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,18 +22,16 @@ public class DecayTask implements CropTask {
         task = new BukkitRunnable() {
             @Override
             public void run() {
-                Location location = crop.getCrop().getLocation();
-                Block block = crop.getSoil();
-
-                if (block.getType() != Material.FARMLAND) {
-                    cancel();
-                    cropManager.getCropTasks().remove(location);
+                if (!crop.isValid()) {
+                    plugin.getLogger().warning(String.format("Crop at %s is not valid, cannot set watered to false.", crop.getCrop().getLocation()));
+                    plugin.getLogger().warning("Removing crop from crops list.");
+                    cropManager.getCrops().remove(crop);
                     return;
                 }
 
-                Block plant = crop.getCrop();
-                plant.setType(Material.AIR);
-                block.setType(Material.DIRT);
+                crop.getCrop().setType(Material.AIR);
+                crop.getSoil().setType(Material.DIRT);
+                cropManager.getCrops().remove(crop);
             }
         }.runTaskLater(plugin, plugin.getGeneralConfig().getDecayDuration().toSeconds() * 20);
     }

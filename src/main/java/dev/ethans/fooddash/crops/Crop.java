@@ -1,17 +1,25 @@
 package dev.ethans.fooddash.crops;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.inventory.ItemType;
+
+import java.util.List;
 
 public class Crop {
 
-    private CropManager cropManager;
+    public static final List<ItemType> validCrops = List.of(
+            ItemType.WHEAT,
+            ItemType.CARROT,
+            ItemType.POTATO
+    );
+
+    private final CropManager cropManager;
     private final Block crop;
     private final Block soil;
 
     private boolean watered = false;
-
-    private CropTask needWaterTask;
 
     public Crop(CropManager cropManager, Block crop, Block soil) {
         this.cropManager = cropManager;
@@ -41,12 +49,10 @@ public class Crop {
         }
 
         grow();
-        needWaterTask = new NeedWaterTask();
-        cropManager.addTask(this, needWaterTask);
+        cropManager.addTask(this, new NeedWaterTask(cropManager));
     }
 
     public void grow() {
-        Block crop = this.crop.getLocation().getBlock();
 
         if (crop.getType().isAir()) return;
         if (!(crop.getBlockData() instanceof Ageable ageable)) return;
@@ -54,5 +60,12 @@ public class Crop {
 
         ageable.setAge(ageable.getAge() + 1);
         crop.setBlockData(ageable);
+    }
+
+    public boolean isValid() {
+        boolean validCrop = validCrops.contains(crop.getType().asItemType())
+                && crop.getBlockData() instanceof Ageable;
+        boolean validSoil = soil.getType() == Material.FARMLAND;
+        return validCrop && validSoil;
     }
 }

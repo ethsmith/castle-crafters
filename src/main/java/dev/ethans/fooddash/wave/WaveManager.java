@@ -1,24 +1,19 @@
 package dev.ethans.fooddash.wave;
 
 import dev.ethans.fooddash.FoodDash;
+import dev.ethans.fooddash.crops.Crop;
 import dev.ethans.fooddash.state.base.GameState;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 public class WaveManager {
 
     private static final FoodDash plugin = FoodDash.getInstance();
-    private static final List<ItemType> potentialItems = List.of(
-            ItemType.WHEAT,
-            ItemType.CARROT,
-            ItemType.POTATO
-    );
 
     private final int startingItemAmount = plugin.getGeneralConfig().getStartingItemAmount();
     private final GameState gameState;
@@ -61,7 +56,7 @@ public class WaveManager {
 
         int totalAmount = 0;
         while (totalAmount < amount) {
-            ItemType type = potentialItems.get((int) (Math.random() * potentialItems.size()));
+            ItemType type = Crop.validCrops.get((int) (Math.random() * Crop.validCrops.size()));
             int bound = amount - totalAmount;
             int amountToAdd = bound <= 1 ? 1 : new Random().nextInt(1, amount - totalAmount);
             totalAmount += amountToAdd;
@@ -107,9 +102,5 @@ public class WaveManager {
 
     public GameState getGameState() {
         return gameState;
-    }
-
-    public List<ItemType> getPotentialItems() {
-        return potentialItems;
     }
 }

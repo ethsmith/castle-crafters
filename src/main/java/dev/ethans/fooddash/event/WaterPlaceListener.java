@@ -34,7 +34,7 @@ public class WaterPlaceListener implements Listener {
 
         if (block == null) return;
 
-        boolean isOnCrop = waveManager.getPotentialItems().contains(block.getType().asItemType());
+        boolean isOnCrop = Crop.validCrops.contains(block.getType().asItemType());
         if (!isOnCrop && block.getType() != Material.FARMLAND) return;
 
         event.setCancelled(true);

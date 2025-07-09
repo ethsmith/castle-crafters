@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class CropManager {
 
-    public static final FoodDash foodDash = FoodDash.getInstance();
+    public static final FoodDash plugin = FoodDash.getInstance();
     private final List<Crop> crops = new ArrayList<>();
     private final Map<Crop, CropTask> cropTasks = new HashMap<>();
 
@@ -22,7 +22,7 @@ public class CropManager {
     }
 
     public static void updateGrowDuration() {
-        growDuration = (foodDash.getGeneralConfig().getGrowDuration().getSeconds()
+        growDuration = (plugin.getGeneralConfig().getGrowDuration().getSeconds()
                 * 20) - ShopUpgrade.GROW_SPEED.getLevel() * 20L;
     }
 
@@ -31,10 +31,18 @@ public class CropManager {
     }
 
     public void addTask(Crop crop, CropTask task) {
+        if (!crop.isValid()) {
+            plugin.getLogger().warning(String.format("Crop at %s is not valid, cannot set watered to false.", crop.getCrop().getLocation()));
+            plugin.getLogger().warning("Removing crop from crops list.");
+            getCrops().remove(crop);
+            return;
+        }
+
         if (cropTasks.containsKey(crop)) {
             cropTasks.get(crop).cancel();
             cropTasks.remove(crop);
         }
+
         cropTasks.put(crop, task);
         task.run(crop);
     }

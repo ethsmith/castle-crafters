@@ -25,6 +25,7 @@ public class Crop {
         this.cropManager = cropManager;
         this.crop = crop;
         this.soil = soil;
+        cropManager.getCrops().add(this);
     }
 
     public Block getCrop() {
@@ -63,6 +64,13 @@ public class Crop {
     }
 
     public boolean isValid() {
+        boolean validCrop = validCrops.contains(crop.getType().asItemType())
+                && crop.getBlockData() instanceof Ageable;
+        boolean validSoil = soil.getType() == Material.FARMLAND;
+        return validCrop && validSoil;
+    }
+
+    public static boolean isValid(Block crop, Block soil) {
         boolean validCrop = validCrops.contains(crop.getType().asItemType())
                 && crop.getBlockData() instanceof Ageable;
         boolean validSoil = soil.getType() == Material.FARMLAND;

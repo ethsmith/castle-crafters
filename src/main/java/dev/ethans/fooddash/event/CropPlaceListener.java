@@ -18,14 +18,11 @@ public class CropPlaceListener implements Listener {
         this.cropManager = cropManager;
     }
 
-    // I am aware this doesn't account for natural growth of crops
-    // but the game timer generally wouldn't ever be long enough
-    // for crops to naturally grow
     @EventHandler
     public void onCropPlace(BlockPlaceEvent event) {
-        Block block = event.getBlockPlaced();
-        if (!(block.getBlockData() instanceof Ageable)) return;
-        Crop crop = new Crop(cropManager, block, block.getLocation().subtract(0, 1, 0).getBlock());
-        cropManager.getCrops().add(crop);
+        Block cropBlock= event.getBlockPlaced();
+        Block soilBlock = cropBlock.getLocation().subtract(0, 1, 0).getBlock();
+        if (!Crop.isValid(cropBlock, soilBlock)) return;
+        new Crop(cropManager, cropBlock, soilBlock);
     }
 }

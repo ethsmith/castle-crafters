@@ -4,7 +4,6 @@ import dev.ethans.fooddash.FoodDash;
 import dev.ethans.fooddash.crops.Crop;
 import dev.ethans.fooddash.crops.CropManager;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Ageable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;

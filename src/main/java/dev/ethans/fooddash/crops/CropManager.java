@@ -1,7 +1,6 @@
 package dev.ethans.fooddash.crops;
 
 import dev.ethans.fooddash.FoodDash;
-import dev.ethans.fooddash.shop.ShopUpgrade;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
